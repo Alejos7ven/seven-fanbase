@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 16, 2021 at 09:59 PM
+-- Generation Time: Sep 24, 2021 at 04:19 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 7.4.13
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `queue` (
   `percent` int(11) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -45,6 +45,10 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `account` varchar(255) NOT NULL,
   `posting` varchar(255) NOT NULL,
+  `vote_comment` int(11) NOT NULL DEFAULT '0',
+  `diff_time` int(11) NOT NULL DEFAULT '24',
+  `category` varchar(255) NOT NULL,
+  `tag` varchar(255) NOT NULL,
   `enable` int(11) NOT NULL DEFAULT '1',
   `min_vp` int(11) NOT NULL,
   PRIMARY KEY (`id`)

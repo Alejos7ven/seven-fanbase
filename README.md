@@ -17,7 +17,16 @@ You will see 3 tables:
 * Settings
 * Trailers
 
-Go to ```settings``` table and add a new row. You will can set an STEEM username, a posting key, enable (0/1, where 1 is enabled) and the min voting power to vote. This account will be the curator account.
+Go to ```settings``` table and add a new row. You will can set: 
+
+* account: STEEM username to use as curator account.
+* posting: STEEM posting key.
+* vote_comment: (0/1) upvote comments, set as 0 to dont do it.
+* diff_time: (hours) set the time in hours to upvote every account, default 24.
+* category: only vote posts in a specified community or category.
+* tag: only vote posts using a specified tag.
+* enable: (0/1) disable/enable your bot, set as 0 to disable it.
+* min_vp: set a minimum voting power to upvote posts.
 
 On the ```trailers``` table you will can add as much accounts as you want and set a fixed percentage, these accounts will be voted once 24 hours with the percentage used.
 

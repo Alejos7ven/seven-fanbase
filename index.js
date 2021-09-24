@@ -31,19 +31,35 @@ function broadcaster() {
             let t = result.operations[0][0]
             let d = result.operations[0][1]
             
-            if (t == 'comment' && d.parent_author == "") {
+            if (t == 'comment') {
+                let add = true
+                if (curators[0].vote_comment == 0) {
+                    if (d.parent_author != "") add = false;
+                }
                 let follower = isFollower(d.author)
                 if (typeof follower == 'object') {
                     if (curators[0].enable == 1 && follower.voted == 1) {
-                        let connection = mysql.createConnection(db.dbConnection);
-                        connection.connect(async (err) => {
-                            if (err) throw err; 
-                            db.enqueue(connection, d.author, d.permlink, follower.percent)
-                            console.log('post added.');
-                            setTimeout(() => {
-                                connection.end();
-                            }, refreshTime - 500);
-                        });
+                        if (curators[0].category != "") {
+                            console.log(`The post ${d.author}/${d.permlink} is using the category ${d.parent_permlink}`);
+                            if (d.parent_permlink != curators[0].category) add = false;
+                        }
+                        if (curators[0].tag != "") {
+                            let json = JSON.parse(d.json_metadata);
+                            let r = json.tags.indexOf(curators[0].tag)
+                            if (r == -1) add = false;
+                        }
+                        if (add) {
+                            let connection = mysql.createConnection(db.dbConnection);
+                            connection.connect(async (err) => {
+                                if (err) throw err; 
+                                db.enqueue(connection, d.author, d.permlink, follower.percent)
+                                console.log('post added.');
+                                setTimeout(() => {
+                                    connection.end();
+                                }, refreshTime - 500);
+                            });
+                        }
+                        
                     }else {
                         console.log('Already voted today');
                     }
@@ -86,7 +102,7 @@ async function checkFollowers() {
                 let last_vote = moment.utc(follower.last_vote);
                 let now = moment.utc()
                 let diff = now.diff(last_vote, 'hours'); 
-                if (diff >= 24) {
+                if (diff >= curators[0].diff_time) {
                     mark(follower.user, 1, false);
                 }
             }

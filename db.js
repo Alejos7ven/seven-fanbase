@@ -45,6 +45,10 @@ class Db {
                             id:r.id,
                             account:r.account,
                             posting:r.posting,
+                            vote_comment:r.vote_comment,
+                            diff_time:r.diff_time,
+                            category:r.category,
+                            tag:r.tag,
                             enable:r.enable,
                             min_vp:r.min_vp,
                             current_vp:100
